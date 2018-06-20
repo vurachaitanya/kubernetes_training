@@ -38,6 +38,7 @@ Above link has Windows curl to download kubectl for windows. (curl -LO https://s
 •	Kubectl rollout status deployment helloworld-deployment
 •	Kubectl rollout undo deployment helloworld-deployment
 •	Kubectl set image deployment helloworld-deployment k8s-demo=amitvashist7/k8s-tiny-web:1
+			 
 •	Kubectl rollout history deployment helloworld-deployment deployments “helloworold-deployment”
 •	Kubectl rollout history deployment helloworld-deployment –revision=1
 •	Kubectl rollout undo deployment helloworld-deployment –to-revision=1
@@ -76,5 +77,100 @@ o	Echo –n > “root” ./username.txt
 o	Echo –n>”passwd” ./password.txt
 o	Kubectl create secret generic db-user-pass –from-file=./username.txt –from-file=./password.txt
 o	Echo –n “root”|base64 ---create hashes 
+o	Kubectl create –f deployments/helloworld-secrets.yml
+o	Kubectl get secrets
+o	Kubectl create –f deployment/helloworld-secret-volume.yml
+o	Kubectl exec –i –t <pod> /bin/sh
+o	kubectl describe pod/wordpress-deployment-6f47769b85-xn5f8 -n default
+o	kubectl creat -f wordpress-service.yml
+o	 kubectl create -f wordpress-service.yml
+o	 kubectl create -f wordpress-single-deployment-no-volumes.yml
+o	 kubectl get pods
+o	 kubectl exec -i -t wordpress-deployment-6f47769b85-xn5f8 /bin/sh
+o	 kubectl get services
+o	 kubectl get pods -o wide
+o	 kubectl describe pods wordpress-deployment-6f47769b85-xn5f8
+o	kubectl exec -i -t  wordpress-deployment-6f47769b85-xn5f8 sh -c wordpress --------------to login to Docker in a pod.
+o	Kubectl run –i  --tty busybox --image=busybox –-restart=Never -- sh
+o	Kubectl get pod –all-namespaces.
+o	Kubectl exec database –i –t – mysql –u root –p <admin>
+		Ingress
+o	Alternate to load balance and node port.
+o	Default is available we can customize or create new.
+o	Nginex configuration 
+o	Kubectl create –f ingress.yml
+o	Kubectl get ingress
+o	Kubectl create –f helloworld-v1.yml v2.yml
+o	Kubectl create –f echoservice.yml
+		Volume
+o	Persistence storage information for state full application.
+	NFS Setup
+o	ufw allow from 172.30.0.0/24 to any port nfs
+o	apt-get install nfs-kernel-server (nfs-common for client)
+o	cat /etc/exports 
+o	/exports        (rw,sync,no_subtree_check)
+o	systemctl restart nfs-mountd
+o	mount -t nfs kube-master:/exports /mnt
+		Volume in K8s
+o	kubectl get pv
+o	kubectl create –f pv/busy box
+
+             Container background : http://delivery.acm.org/10.1145/2900000/2898444/p10-burns.pdf?ip=183.82.116.191&id=2898444&acc=OPEN&key=4D4702B0C3E38B35%2E4D4702B0C3E38B35%2E4D4702B0C3E38B35%2E6D218144511F3437&__acm__=1529504863_be8f3e7e7832ecb5c7a8f1ffded4fa97
+	Horizontal pod expansion
+o	kubectl create –f hpe-example.yml
+o	kubectl get hpa
+o	kubectl run -i --tty load-genrater --image=busybox /bin/sh
+o	kubectl get all
+         K8s Master Services
+	Quota : Namespace quota and cluster level quota.
+Kubectl create namespace myname
+Kubectl get namespace
+kubectl get rs
+Configmaps
+kubectl get pods --v=7 ----let you know the API’s
+kubectl get limits –namespace=myspace
+kubectl get deployment -n myspace
+kubectl get pods –namespace=myspace
+kubectl describe deployment –n myspace
+uht global------Training in 4 hours online training by amit.
+	Authorization
+RBAC: Access.
+o	–authorization-mode=rbac
+o	Kops and kubeadm uses rbac.
+o	Kubectl to grant permission
+o	Role is namespace
+o	Cluster role: cluster admin
+o	Rolebinding: single name space.
+o	Role can like see pods secrets ,list,watch,
+o	Assigned the role to user.
+o	Rolebinding –
+o	To spine up on all name spaces need to reader at cluster wide.
+o	User creation :
+o	sudo apt install openssl
+o	openssl genrsa -out amit.pem 2048
+o	openssl req -new -key amit.pem -out amit-csr.pem -subj "/CN=amit/O=myteam/"
+o	openssl x509 -req -in amit-csr.pem -CA ca.crt -CAkey ca.key -CAcreateserial -out amit.crt -days 10000
+o	```
+o	
+o	## add new context
+o	```
+o	kubectl config set-credentials amit --client-certificate=amit.crt --client-key=amit.pem
+o	kubectl config set-context amit --cluster=kubernetes.newtech.academy --user amit
+o	```
+o	Kubectl config get-contexts
+o	Kubectl config use-context kubernetes-admin@kubernetes.
+o	Kubectl config use-context amit
+o	Kubectl create –f admin-user.yml
+o	Kubectl delete –f admin-user.yml
+o	Kubectl config use-context amit
+		Configmap
+o	Global configuration for group of applicaions.
+o	NGINEX variables
+o	Env
+o	Command line arguments
+o	Volume etc
+o	Kubectl create configmap nginx-config –from-file=reverseproxy.conf.
+o	Kubectl get configmap.
+o	Kubectl describe configmap nginx-config
 
 ```
